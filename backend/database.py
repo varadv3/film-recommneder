@@ -1,16 +1,20 @@
 import psycopg2
+# updated
 
-try:
-    conn = psycopg2.connect(
-        host='localhost',
-        dbname='dvdrental',
-        user="postgres",
-        password="888277723",
-        port=5432
-    )
-    print("Database Connected!")
-except:
-    print("Database not Connected!")
 
+# nobr
 def get_database_connection():
-    return conn
+    try:
+        conn = psycopg2.connect(
+            host='ep-calm-pond-a488jzqs-pooler.us-east-1.aws.neon.tech',
+            dbname='verceldb',
+            user="default",
+            password="YylxnG5mU6SX",
+            sslmode='require',
+            options='endpoint=ep-calm-pond-a488jzqs-pooler'
+        )
+        print("Database Connected!")
+        return conn
+    except Exception as e:
+        print("Database Connection Error:", e)
+        return None
