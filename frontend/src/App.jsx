@@ -1,52 +1,31 @@
-import React, { useState, useEffect } from 'react';
+// App.js
 
-const FilmRecommendations = () => {
-  const [films, setFilms] = useState([]);
-  const [category, setCategory] = useState('action'); // Initial category
+import React, { useState } from 'react';
+import FilmsList from './FilmsList';
 
-  useEffect(() => {
-    const fetchFilms = async () => {
-      try {
-        const response = await fetch(`http://localhost:8000/films/${category}`);
-        if (!response.ok) {
-          throw new Error('Category not found');
-        }
-        const data = await response.json();
-        setFilms(data);
-      } catch (error) {
-        console.error('Error fetching films:', error.message);
-      }
-    };
-    fetchFilms();
-  }, [category]);
+const App = () => {
+  const [selectedCategory, setSelectedCategory] = useState('');
 
-  const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
-  };
-
-  const handleButtonClick = () => {
-    // Do something when the button is clicked
-    console.log('Button clicked!');
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
   };
 
   return (
-    <div>
-      <h2>Film Recommendations</h2>
-      <select value={category} onChange={handleCategoryChange}>
-        <option value="action">Action</option>
-        <option value="comedy">Comedy</option>
-        {/* Add other category options here */}
-      </select>
-      <button onClick={handleButtonClick}>Click me</button>
-      <ul>
-        {films.map((film, index) => (
-          <li key={index}>
-            <strong>Title:</strong> {film.title} - <em>Description:</em> {film.description}
-          </li>
-        ))}
-      </ul>
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-4">Films Catalog</h1>
+      <div className="mb-4">
+        <label htmlFor="categorySelect" className="mr-2">Select a Category:</label>
+        <select id="categorySelect" value={selectedCategory} onChange={handleCategoryChange} className="border rounded px-2 py-1">
+          <option value="">Select...</option>
+          <option value="action">Action</option>
+          <option value="comedy">Comedy</option>
+          <option value="drama">Drama</option>
+          {/* Add more options for other categories */}
+        </select>
+      </div>
+      {selectedCategory && <FilmsList category={selectedCategory} />}
     </div>
   );
 };
 
-export default FilmRecommendations;
+export default App;
