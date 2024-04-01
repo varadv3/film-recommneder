@@ -1,8 +1,5 @@
 import psycopg2
-# updated
 
-
-# nobr
 def get_database_connection():
     try:
         conn = psycopg2.connect(
